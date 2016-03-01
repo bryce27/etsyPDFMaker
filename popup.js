@@ -2,12 +2,6 @@ document.addEventListener('DOMContentLoaded', function() {
   var checkPageButton = document.getElementById('checkPage');
   checkPageButton.addEventListener('click', function(tab) {
 
-    //chrome.tabs.getSelected(null, function(tab) {
-
-      //alert('hey')
-
-      chrome.tabs.executeScript(tab.id, {file: "content.js"});
-
 
       var value = $('#datepicker').val()
 
@@ -20,6 +14,11 @@ document.addEventListener('DOMContentLoaded', function() {
         chrome.tabs.sendRequest(tab.id, {date: dateValues}, function(response) 
       {}); 
       }); 
+
+      chrome.tabs.executeScript(tab.id, {file: "content.js"});
+
+
+      
 
       
        //console.log(tab)
