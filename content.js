@@ -20,12 +20,11 @@ oReq.send(null);
 var pickedDate;
 
 chrome.extension.onRequest.addListener( 
-	function(request, sender, sendResponse) { 
-		var values = request.date;
-		console.log(request);
-		pickedDate = new Date(values[0], parseInt(values[1])-1, values[2]);
-
-	});
+function(request, sender, sendResponse) { 
+	var values = request.date;
+	console.log(request);
+	pickedDate = new Date(values[0], parseInt(values[1])-1, values[2]);
+});
 
 
 // Wrapper for makePDF()
@@ -34,8 +33,6 @@ var pdfsMade = 0;
 
 function start(){
 
-	//console.log('start')
-
 	if (pdfsMade == 0){
 		makePDF()
 		pdfsMade++;
@@ -43,7 +40,6 @@ function start(){
 }
 
 function makePDF(){
-	//console.log('makePDF...')
 
 	var ordersInRange = []
 
