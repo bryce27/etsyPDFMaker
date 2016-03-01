@@ -22,7 +22,6 @@ var pickedDate;
 chrome.extension.onRequest.addListener( 
 function(request, sender, sendResponse) { 
 	var values = request.date;
-	console.log(request);
 	pickedDate = new Date(values[0], parseInt(values[1])-1, values[2]);
 });
 
