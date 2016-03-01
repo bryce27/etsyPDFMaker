@@ -1,3 +1,6 @@
+
+// Get the font and store in an array buffer
+
 var arrayBuffer;
 var oReq = new XMLHttpRequest();
 // oReq.open("GET", "https://github.com/google/fonts/blob/master/ofl/copse/Copse-Regular.ttf?raw=true", true);
@@ -12,30 +15,35 @@ oReq.onload = function(oEvent) {
 oReq.send(null);
 
 
+// Get the request from the popup window and get the date picked
+
 var pickedDate;
+
+chrome.extension.onRequest.addListener( 
+	function(request, sender, sendResponse) { 
+		var values = request.date;
+		console.log(request);
+		pickedDate = new Date(values[0], parseInt(values[1])-1, values[2]);
+
+	});
+
+
+// Wrapper for makePDF()
+
+var pdfsMade = 0;
 
 function start(){
 
-	console.log('start')
+	//console.log('start')
 
-	var pdfsMade = 0;
-
-	chrome.extension.onRequest.addListener( 
-		function(request, sender, sendResponse) { 
-			var values = request.date;
-			console.log(request);
-			pickedDate = new Date(values[0], parseInt(values[1])-1, values[2]);
-
-			if (pdfsMade == 0){
-				makePDF()
-				pdfsMade++;
-			}
-
-		}); 
+	if (pdfsMade == 0){
+		makePDF()
+		pdfsMade++;
+	} 
 }
 
 function makePDF(){
-	console.log('makePDF...')
+	//console.log('makePDF...')
 
 	var ordersInRange = []
 
@@ -58,6 +66,8 @@ function makePDF(){
 		}
 
 	});
+
+	// start drawing
 
 	var y = 60;
 	var x = 120;
@@ -148,7 +158,7 @@ function makePDF(){
 
 	stream.on('finish', function() {
 		var blob = stream.toBlob('application/pdf');
-		saveData(blob, 'test.pdf');
+		saveData(blob, 'Orders after '+pickedDate.toDateString()+'.pdf');
 	});
 
 }
