@@ -154,7 +154,8 @@ function makePDF(){
 
 	stream.on('finish', function() {
 		var blob = stream.toBlob('application/pdf');
-		saveData(blob, 'Orders after '+pickedDate.toDateString()+'.pdf');
+		var today = new Date();
+		saveData(blob, pickedDate.toDateString()+' - '+today.toDateString()+'.pdf');
 	});
 
 }
